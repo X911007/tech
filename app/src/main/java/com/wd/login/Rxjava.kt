@@ -16,11 +16,7 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
-/**
- * author: Xuexiandong
- * data: 2019/12/20 10:10:48
- * function：
- */
+
 //private constructor() 私有构造
 class Rxjava private constructor() {
     private var retrofit: Retrofit? = null

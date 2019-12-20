@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit
 //private constructor() 私有构造
 class RxjavaUtil private constructor() {
 
-    //    val create: IApi
     private var readable: Retrofit? = null
 
     //companion object  单例
@@ -48,8 +47,6 @@ class RxjavaUtil private constructor() {
             .baseUrl(Api.BASE_URL_)
             .client(ok)
             .build()
-
-//        create = readable.create(IApi::class.java)
     }
 
     fun <T> create(tClass: Class<T>): T {

@@ -1,5 +1,8 @@
 package com.wd.login
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,13 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        /*//两种赋值方式
-        kte.setText("AAA")
-//        kte.text="BBB"
-        kte.setOnClickListener ({
-            Toast.makeText(this, ""+kte.text, Toast.LENGTH_LONG).show()
-
-        })*/
 
         //手机号
         var edittext = edit.text
@@ -33,15 +29,11 @@ class MainActivity : AppCompatActivity() {
         var nametext = name.text
         //密码
         var pwdtext = pwd.text
-        //注册
-        var registeredtext = registered.text
-        //登录
-        var logintext = login.text
         //登录
         login.setOnClickListener {
             edittexts = edittext.trim().toString()
             pwdtexts = pwdtext.trim().toString()
-
+            //密码加密
             val encryptByPublicKey = RsaCoder.encryptByPublicKey(pwdtexts)
 
             map.put(Api.URL_PHONE, edittexts!!)
@@ -59,6 +51,9 @@ class MainActivity : AppCompatActivity() {
                     //成功
                     override fun onNext(t: BeanLogIn) {
                         Log.i("成功", "成功accept: " + t.message)
+                        if ("0000".equals(t.status)) {
+                            Jump()
+                        }
                     }
 
                     //失败
@@ -71,11 +66,14 @@ class MainActivity : AppCompatActivity() {
         //注册
         registered.setOnClickListener {
             edittexts = edittext.trim().toString()
-//            Toast.makeText(this, "注册" + edittexts, Toast.LENGTH_LONG).show()
-            map.put(Api.URL_PHONE, "18946132524")
-//            map.put(Api.URL_PHONE, trim!!)
-            map.put(Api.URL_NICKNAME, "你好哦")
-            map.put(Api.URL_PWD, Api.URL_PWD_S)
+            nametexts = nametext.trim().toString()
+            pwdtexts = pwdtext.trim().toString()
+            //密码加密
+            val encryptByPublicKey = RsaCoder.encryptByPublicKey(pwdtexts)
+
+            map.put(Api.URL_PHONE, edittexts!!)
+            map.put(Api.URL_NICKNAME, nametexts!!)
+            map.put(Api.URL_PWD, encryptByPublicKey!!)
 
             RxjavaUtil.instance.create(IApi::class.java)
                 .postRegistered(Api.URL_REGISTERED, map)
@@ -89,6 +87,8 @@ class MainActivity : AppCompatActivity() {
                     //成功
                     override fun onNext(t: BeanRegistered) {
                         Log.i("成功", "成功accept: " + t.message)
+                        //吐司
+                        Toast(t.message.toString())
                     }
 
                     //失败
@@ -97,5 +97,16 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
         }
+    }
+
+    //登录跳转
+    fun Jump() {
+        startActivity(Intent(this, Main2Activity::class.java))
+    }
+
+    //注册吐司
+    fun Toast(t: String) {
+        Toast.makeText(this, "" + t, Toast.LENGTH_LONG).show()
+
     }
 }
