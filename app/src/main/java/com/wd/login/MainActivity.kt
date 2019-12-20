@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         login.setOnClickListener {
             edittexts = edittext.trim().toString()
             pwdtexts = pwdtext.trim().toString()
+
             //密码加密
             val encryptByPublicKey = RsaCoder.encryptByPublicKey(pwdtexts)
 
@@ -52,15 +53,23 @@ class MainActivity : AppCompatActivity() {
                     override fun onNext(t: BeanLogIn) {
                         Log.i("成功", "成功accept: " + t.message)
                         if ("0000".equals(t.status)) {
+                            //跳转
                             Jump()
+                            //吐司
+                            Toast(t.message.toString())
                         }
                     }
 
                     //失败
                     override fun onError(e: Throwable) {
                         Log.i("失败", "失败accept: " + e.message)
+                        //吐司
+                        Toast(e.message.toString())
                     }
                 })
+        }
+        fun Login(){
+
         }
 
         //注册
@@ -94,6 +103,8 @@ class MainActivity : AppCompatActivity() {
                     //失败
                     override fun onError(e: Throwable) {
                         Log.i("失败", "失败accept: " + e.message)
+                        //吐司
+                        Toast(e.message.toString())
                     }
                 })
         }
