@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
             edittexts = edittext.trim().toString()
             pwdtexts = pwdtext.trim().toString()
 
+            /*if (edittexts==null){
+                return
+            }*/
+
             //密码加密
             val encryptByPublicKey = RsaCoder.encryptByPublicKey(pwdtexts)
 
@@ -46,12 +50,12 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : DisposableObserver<BeanLogIn>() {
                     override fun onComplete() {
-                        Log.i("??", "??accept: ")
+                        Log.i("MainActivity", "??accept: ")
                     }
 
                     //成功
                     override fun onNext(t: BeanLogIn) {
-                        Log.i("成功", "成功accept: " + t.message)
+                        Log.i("MainActivity", "成功accept: " + t.message)
                         if ("0000".equals(t.status)) {
                             //跳转
                             Jump()
@@ -62,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
                     //失败
                     override fun onError(e: Throwable) {
-                        Log.i("失败", "失败accept: " + e.message)
+                        Log.i("MainActivity", "失败accept: " + e.message)
                         //吐司
                         Toast(e.message.toString())
                     }
@@ -84,7 +88,9 @@ class MainActivity : AppCompatActivity() {
             map.put(Api.URL_NICKNAME, nametexts!!)
             map.put(Api.URL_PWD, encryptByPublicKey!!)
 
-            RxjavaUtil.instance.create(IApi::class.java)
+            RxjavaUtil
+                .instance
+                .create(IApi::class.java)
                 .postRegistered(Api.URL_REGISTERED, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

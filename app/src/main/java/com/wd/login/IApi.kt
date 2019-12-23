@@ -10,9 +10,9 @@ import retrofit2.http.*
  * function：
  */
 interface IApi {
-
-//    @GET
-//    fun get(@Url url: String): Observable<ResponseBody>
+    //轮播
+    @GET
+    fun getBannerShow(@Url url: String): Observable<BeanbannerShow>
 
     //注册
     @FormUrlEncoded

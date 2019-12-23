@@ -11,7 +11,6 @@ interface Api {
          * Base内
          */
         val BASE_URL = "https://172.17.8.100/"
-        //Base外
         /**
          * Base外
          */
@@ -25,6 +24,10 @@ interface Api {
          * 登录
          */
         val URL_LOGIN = "techApi/user/v1/login"
+        /**
+         * banner轮播
+         */
+        val URL_BANNERSHOW = "techApi/information/v1/bannerShow"
         /**
          * /手机号
          */
